@@ -16,7 +16,7 @@ function [features] = extractFeature(data, rowIdx, columnIdx, width, height)
                     featureImage = imcrop(convertedImage,[columnIdx rowIdx width-1 height-1]); % crop image
                     % image = imadjust(image,[0.3 0.9],[]); % adjust
  
-                    imshow(featureImage)
+                    % imshow(featureImage)
                     % store grayscale image       
                     featuresData(numberImage,:,:) = featureImage; 
                     numberImage = numberImage + 1;  

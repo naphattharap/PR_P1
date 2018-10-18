@@ -15,11 +15,15 @@
 % 7:Surprise
 emotionsUsed = [0 1 3 4 5 6 7];  
 
+% emotionsUsed = [6]; 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%% EXTRACT DATA %%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
 [imagesData shapeData labels] = extractData('../CKDB', emotionsUsed);
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% DIVIDE DATA (TRAIN/TEST) WITH CROSS VALIDATION  %%%%%%%%%
@@ -34,14 +38,11 @@ indexesCrossVal = crossvalind('Kfold',size(imagesData,1),K);
 [accuracy confMatrix] = testMethod(imagesData , labels, emotionsUsed ,  'grayscaleMean', 'euclidean', indexesCrossVal)
 
 
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%% EXTRACT FEATURE EYES & MOUTH %%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-[features] = extractFeaturesFromData(imagesData, 'eyesMouth');
+[features] = extractFeaturesFromData(imagesData, shapeData, 'eyesMouth');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% DIVIDE DATA (TRAIN/TEST) WITH CROSS VALIDATION  %%%%%%%%%
@@ -66,7 +67,7 @@ disp(confMatrix);
 %%%%%%% EXTRACT FEATURE MOUTH %%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-[features] = extractFeaturesFromData(imagesData, 'mouth');
+[features] = extractFeaturesFromData(imagesData, shapeData, 'mouth');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% DIVIDE DATA (TRAIN/TEST) WITH CROSS VALIDATION  %%%%%%%%%
@@ -90,7 +91,7 @@ disp(confMatrix);
 %%%%%%% EXTRACT FEATURE EYES %%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-[features] = extractFeaturesFromData(imagesData, 'eyes');
+[features] = extractFeaturesFromData(imagesData, shapeData, 'eyes');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% DIVIDE DATA (TRAIN/TEST) WITH CROSS VALIDATION  %%%%%%%%%
@@ -110,3 +111,43 @@ disp('EYES FEATURE ConfMatrix')
 disp(confMatrix);
 % error [accuracy confMatrix] = testMethod(features , labels, emotionsUsed ,  'mouthMedian', 'seuclidean', indexesCrossVal)
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% Contour Mouth %%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[features] = extractFeaturesFromData(imagesData, shapeData, 'mouthContour');
+K = 3;
+indexesCrossVal = crossvalind('Kfold',size(features,1),K);
+[accuracy confMatrix] = testMethod(features , labels, emotionsUsed ,  'mouthContourMean', 'euclidean', indexesCrossVal);
+disp('Lip contour  accuracy');
+disp(accuracy);
+disp('Lip contour confMatrix')
+disp(confMatrix);
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% Control point %%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+[features] = extractFeaturesFromData(imagesData, shapeData, 'mouthControlPoints');
+K = 3;
+indexesCrossVal = crossvalind('Kfold',size(features,1),K);
+[accuracy confMatrix] = testMethod(features , labels, emotionsUsed ,  'mouthControlPointMean', 'euclidean', indexesCrossVal);
+disp('Lip control points distance accuracy');
+disp(accuracy);
+disp('Lip control points distance confMatrix')
+disp(confMatrix);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% Control point#2 %%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+[features] = extractFeaturesFromData(imagesData, shapeData, 'mouthControlPoints4960');
+K = 3;
+indexesCrossVal = crossvalind('Kfold',size(features,1),K);
+[accuracy confMatrix] = testMethod(features , labels, emotionsUsed ,  'mouthControlPoint4960Mean', 'euclidean', indexesCrossVal);
+disp('Mouth control points#2 accuracy');
+disp(accuracy);
+disp('Mouth control points#2 confMatrix')
+disp(confMatrix);
