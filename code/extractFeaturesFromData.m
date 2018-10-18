@@ -84,8 +84,8 @@ switch featureType
             mouthEdgeDinstance(i,1,1) = distance1;
             mouthEdgeDinstance(i,1,2) = distance2;
             
-            disp(['distance1 ', num2str(distance1)]);
-            disp(['distance2 ', num2str(distance2)]);
+            %disp(['distance1 ', num2str(distance1)]);
+            %disp(['distance2 ', num2str(distance2)]);
         end
         features = mouthEdgeDinstance;
     case 'mouthControlPoints4960'
@@ -111,7 +111,7 @@ switch featureType
                 y2 = point2(1, :, 2);
                 sumDistance =  sumDistance + sqrt((x2-x1)^2+(y2-y1)^2);
             end 
-            disp(['sum of distance: ', num2str(sumDistance)]);
+            %disp(['sum of distance: ', num2str(sumDistance)]);
         end
         features = mouthPointsDinstance;
         
