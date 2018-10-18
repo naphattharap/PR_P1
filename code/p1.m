@@ -32,3 +32,81 @@ indexesCrossVal = crossvalind('Kfold',size(imagesData,1),K);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 [accuracy confMatrix] = testMethod(imagesData , labels, emotionsUsed ,  'grayscaleMean', 'euclidean', indexesCrossVal)
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%% EXTRACT FEATURE EYES & MOUTH %%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+[features] = extractFeaturesFromData(imagesData, 'eyesMouth');
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% DIVIDE DATA (TRAIN/TEST) WITH CROSS VALIDATION  %%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+K = 3;
+indexesCrossVal = crossvalind('Kfold',size(features,1),K);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% TEST DIFFERENT TEMPLATES METHODS %%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+[accuracy confMatrix] = testMethod(features , labels, emotionsUsed ,  'eyesMouthMean', 'euclidean', indexesCrossVal);
+% error [accuracy confMatrix] = testMethod(features , labels, emotionsUsed ,  'mouthMedian', 'seuclidean', indexesCrossVal)
+disp('EYES & MOUTH FEATURE Accuracy');
+disp(accuracy);
+disp('EYES & MOUTH  FEATURE ConfMatrix')
+disp(confMatrix);
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%% EXTRACT FEATURE MOUTH %%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+[features] = extractFeaturesFromData(imagesData, 'mouth');
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% DIVIDE DATA (TRAIN/TEST) WITH CROSS VALIDATION  %%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+K = 3;
+indexesCrossVal = crossvalind('Kfold',size(features,1),K);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% TEST DIFFERENT TEMPLATES METHODS %%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+[accuracy confMatrix] = testMethod(features , labels, emotionsUsed ,  'mouthMean', 'euclidean', indexesCrossVal);
+% error [accuracy confMatrix] = testMethod(features , labels, emotionsUsed ,  'mouthMedian', 'seuclidean', indexesCrossVal)
+disp('MOUTH FEATURE Accuracy');
+disp(accuracy);
+disp('MOUTH FEATURE ConfMatrix')
+disp(confMatrix);
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%% EXTRACT FEATURE EYES %%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+[features] = extractFeaturesFromData(imagesData, 'eyes');
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% DIVIDE DATA (TRAIN/TEST) WITH CROSS VALIDATION  %%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+K = 3;
+indexesCrossVal = crossvalind('Kfold',size(features,1),K);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% TEST DIFFERENT TEMPLATES METHODS %%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+[accuracy confMatrix] = testMethod(features , labels, emotionsUsed ,  'eyesMean', 'euclidean', indexesCrossVal);
+
+disp('EYES FEATURE Accuracy');
+disp(accuracy);
+disp('EYES FEATURE ConfMatrix')
+disp(confMatrix);
+% error [accuracy confMatrix] = testMethod(features , labels, emotionsUsed ,  'mouthMedian', 'seuclidean', indexesCrossVal)
+
