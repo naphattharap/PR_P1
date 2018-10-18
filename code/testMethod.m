@@ -14,7 +14,7 @@ K = max(indexes);
 
 confusionMatrix = zeros(numel(labelsUsed));
 for k = 1:K
-    display(['Testing data subset: ' num2str(k) '/' num2str(K)]);
+    %display(['Testing data subset: ' num2str(k) '/' num2str(K)]);
     %get train and test dataset with the indexes obtained with the KFold
     %cross validation
     train = data(indexes~=k,:,:);
