@@ -8,35 +8,36 @@ switch namePattern
     case 'grayscaleMedian'
         %mean of the grayscale images
         pattern = squeeze(median(data));
-    case 'mouthMean'
+    case Constants.TEMPLATE_MOUTH_MEAN
         %mean of the grayscale images
         pattern = squeeze(mean(data));
-    case 'mouthMedian'
+        
+    case Constants.TEMPLATE_MOUTH_MEDIAN
         %mean of the grayscale images
         pattern = squeeze(median(data));
-    case 'eyesMean'
+        
+    case Constants.TEMPLATE_EYES_MEAN
         %mean of the grayscale images
         pattern = squeeze(mean(data));
-    case 'eyesMedian'
+
+    case Constants.TEMPLATE_EYES_AND_MOUTH_MEAN
+        %mean of the grayscale images
+        pattern = squeeze(mean(data));
+        
+    case Constants.TEMPLATE_MOUTH_CONTROL_POINT_MEAN
+        %mean of the grayscale images
+        pattern = squeeze(mean(data));
+        
+    case Constants.TEMPLATE_MOUTH_CONTROL_POINT_MEAN
         %mean of the grayscale images
         pattern = squeeze(median(data));
-    case 'eyesMouthMean'
+        
+    case Constants.TEMPLATE_MOUTH_CONTOUR_MEAN
         %mean of the grayscale images
         pattern = squeeze(mean(data));
-    case 'eyesMouthMedian'
-        %mean of the grayscale images
-        pattern = squeeze(median(data));
-    case 'mouthControlPointMean'
+        
+   case Constants.TEMPLATE_BINARY_IMAGES_MEAN
         %mean of the grayscale images
         pattern = squeeze(mean(data));
-    case 'mouthContourMean'
-        %mean of the grayscale images
-        pattern = squeeze(mean(data));
-    case 'mouthControlPoint4960Mean'
-        %mean of the grayscale images
-        pattern = squeeze(mean(data));
-    case 'mouthControlPoint4960Median'
-        %mean of the grayscale images
-        pattern = squeeze(median(data));
 end
 

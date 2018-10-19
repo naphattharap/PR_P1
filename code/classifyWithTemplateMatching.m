@@ -37,11 +37,11 @@ function [ estimatedLabels ] = classifyWithTemplateMatching( templates , testDat
                     templateScore(e) = pdist2(currentSample(:)', currentTemplate(:)','cityblock');
                 case 'hamming'
                     templateScore(e) = pdist2(currentSample(:)', currentTemplate(:)','hamming');
-                case 'seuclidean'
-                    templateScore(e) = pdist2(currentSample(:)', currentTemplate(:)','seuclidean');
                 case 'correlation'
                     templateScore(e) = pdist2(currentSample(:)', currentTemplate(:)','correlation');
-            
+                case 'jaccard'
+                    templateScore(e) = pdist2(currentSample(:)', currentTemplate(:)','jaccard');
+
             end
         end        
         %get the label with the minimum similarity score and assign it to
