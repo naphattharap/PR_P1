@@ -34,10 +34,11 @@ switch featureType
         heightMouth = 30;
         % use the same width for 2 images
         width = 100;
-        [numberImage,row, col] = size(data);
+        [totalNumberImages,row, col] = size(data);
         % initialize matrix to store extracted feature.
-        extractedFeature = zeros(numberImage, (heightEyes + heightMouth), width);
-        for i = 1:numberImage
+        extractedFeature = zeros(totalNumberImages, (heightEyes + heightMouth), width);
+        numberImage = 1;
+        for i = 1:totalNumberImages
             mxImage = data(i, : , : ); % get image data from matrix Nx128x128
             oriImage = reshape(mxImage, row, col);
             convertedImage = uint8(oriImage);
@@ -50,16 +51,16 @@ switch featureType
             %imshow(image)
             
             extractedFeature(numberImage,:,:) = image;
+            numberImage = numberImage + 1;
         end
         features = extractedFeature;
-        %features = reshape(extractedFeature,size(extractedFeature,1),(heightMouth+heightEyes)*width);
-        
+      
     case Constants.EXTRACT_CONTROL_POINTS_MOUTH1
         % take shape data
-        [totalNumberData,row,column] = size(data);
-        mouthEdgeDinstance = zeros(totalNumberData, 1,2);
-        
-        for i = 1:totalNumberData
+        [totalNumberImages,row,column] = size(data);
+        mouthEdgeDinstance = zeros(totalNumberImages, 1,2);
+        numberImage = 1;
+        for i = 1:totalNumberImages
             % mxImage = data(i, : , : ); % get image data from matrix Nx128x128
             % oriImage = reshape(mxImage, row, column);
             % convertedImage = uint8(oriImage);
@@ -86,9 +87,9 @@ switch featureType
             y4 = lipEdge55(1, :, 2);
             distance2 = sqrt((x4-x3)^2+(y4-y3)^2);
             
-            mouthEdgeDinstance(i,1,1) = distance1;
-            mouthEdgeDinstance(i,1,2) = distance2;
-            
+            mouthEdgeDinstance(numberImage,1,1) = distance1;
+            mouthEdgeDinstance(numberImage,1,2) = distance2;
+            numberImage = numberImage + 1;
             %disp(['distance1 ', num2str(distance1)]);
             %disp(['distance2 ', num2str(distance2)]);
         end
@@ -97,10 +98,10 @@ switch featureType
     case Constants.EXTRACT_CONTROL_POINTS_MOUTH2
         % find distance of landmark 49 to 60
         % take shape data
-        [totalNumberData,row,column] = size(data);
-        mouthPointDistance = zeros(totalNumberData, 1,1);
-        
-        for i = 1:totalNumberData
+        [totalNumberImages,row,column] = size(data);
+        mouthPointDistance = zeros(totalNumberImages, 1,1);
+        numberImage = 1;
+        for i = 1:totalNumberImages
             % mxImage = data(i, : , : ); % get image data from matrix Nx128x128
             % oriImage = reshape(mxImage, row, column);
             % convertedImage = uint8(oriImage);
@@ -127,7 +128,8 @@ switch featureType
             x2 = point2(1, :, 1);
             y2 = point2(1, :, 2);
             sumDistance =  sumDistance + sqrt((x2-x1)^2+(y2-y1)^2);
-            mouthPointDistance(i, 1, 1) = sumDistance;
+            mouthPointDistance(numberImage, 1, 1) = sumDistance;
+            numberImage = numberImage + 1;
             %disp(['sum of distance: ', num2str(sumDistance)]);
         end
         features = mouthPointDistance;
@@ -135,10 +137,11 @@ switch featureType
     case Constants.EXTRACT_CONTROL_POINTS_MOUTH3
         % find distance of landmark 34 and 58
         % take shape data
-        [totalNumberData,row,column] = size(data);
-        mouthPointsDistance = zeros(totalNumberData, 1,1);
+        [totalNumberImages,row,column] = size(data);
+        mouthPointsDistance = zeros(totalNumberImages, 1,1);
         sumDistance = 0;
-        for i = 1:totalNumberData
+        numberImage = 1;
+        for i = 1:totalNumberImages
             
             % get control point data at number 34 (nose) 58 (bottom lip)
             point1 = shapeData(i, 34, 1:2);
@@ -149,20 +152,22 @@ switch featureType
             x2 = point2(1, :, 1);
             y2 = point2(1, :, 2);
             sumDistance =  sumDistance + sqrt((x2-x1)^2+(y2-y1)^2);
-            mouthPointsDistance(i, 1, 1) = sumDistance;
+            mouthPointsDistance(numberImage, 1, 1) = sumDistance;
+            numberImage = numberImage + 1;
             %disp(['sum of distance: ', num2str(sumDistance)]);
         end
         features = mouthPointsDistance;
         
     case Constants.EXTRACT_PICTURE_CONTOUR
-        [m,n,o] = size(data);
+
         rowIdx = 70;
         columnIdx = 30;
         height = 35;
         width = 70;
-        [totalNumberData,row,column] = size(data);
-        mouthContourImages = zeros(totalNumberData, height,width);
-        for i = 1:m
+        [totalNumberImages,row,column] = size(data);
+        mouthContourImages = zeros(totalNumberImages, height,width);
+        numberImage = 1;
+        for i = 1:totalNumberImages
             mxImage = data(i, : , : ); % get image data from matrix Nx128x128
             oriImage = reshape(mxImage, row, column);
             convertedImage = uint8(oriImage);
@@ -173,19 +178,20 @@ switch featureType
             mask(1:height,1:width) = 1;
             bw = activecontour(featureImage, mask, 100);%, 'edge'
             % imshow(bw);
-            mouthContourImages(i,:,:) = bw;
+            mouthContourImages(numberImage,:,:) = bw;
+            numberImage = numberImage + 1;
         end
         features = mouthContourImages;
         
     case Constants.EXTRACT_PICTURE_BINARY
-        [m,n,o] = size(data);
         rowIdx = 72;
         columnIdx = 32;
         height = 38;
         width = 65;
-        [totalNumberData,row,column] = size(data);
-        mouthImages = zeros(totalNumberData, height,width);
-        for i = 1:m
+        [totalNumberImages,row,column] = size(data);
+        mouthImages = zeros(totalNumberImages, height,width);
+        numberImage = 1;
+        for i = 1:totalNumberImages
             mxImage = data(i, : , : ); % get image data from matrix Nx128x128
             oriImage = reshape(mxImage, row, column);
             convertedImage = uint8(oriImage);
@@ -193,7 +199,8 @@ switch featureType
             bw1 = imbinarize(featureImage);
             bw1 = bwareaopen(bw1,50);
             % imshow(bw1)
-            mouthImages(i,:,:) = bw1;
+            mouthImages(numberImage,:,:) = bw1;
+            numberImage = numberImage + 1;
             % bw = imadjust(featureImage);
             % imshow(bw);
             % mouthImages(i,:,:) = bw;
