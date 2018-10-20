@@ -24,12 +24,15 @@ for k = 1:K
     %reserve memory to store the template for each emotion
     c= 1;
     for e = labelsUsed
+        % 60x128x128
         trainEmotion = train(labelsTrain==e,:,:);
+        % 7xRxC
         templates(c,:,:) = createTemplate(trainEmotion, templateMethod); 
         c = c+1;
     end
     
     %Create confusion matrix evaluating the templates with the test data
+    % test = imagesxRxC
     estimatedLabels = classifyWithTemplateMatching(templates , test , templateMethod, errorMeasure, labelsUsed);
     confusionMatrix = confusionMatrix + confusionmat(estimatedLabels,labelsTest,'ORDER',labelsUsed);
 end
