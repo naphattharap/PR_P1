@@ -22,6 +22,6 @@ for i = 1:totalNumberImages
     numberImage = numberImage + 1;
     
 end
-features = reshape(featuresData,size(featuresData,1),height*width);
+features = featuresData;
 end
 
