@@ -38,7 +38,7 @@ indexesCrossVal = crossvalind('Kfold',size(imagesData,1),K);
 
 % Test all data with grayscale mean and measure by euclidean distance.
 [accuracy confMatrix] = testMethod(imagesData , labels, emotionsUsed , 'grayscaleMean', 'euclidean', indexesCrossVal);
-
+reportResult("Grayscale", "euclidean", accuracy, confMatrix);
 
 
 
@@ -88,9 +88,9 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Template: Eyes and Mouth Grayscale
 % Experiment in 3 patterns
-% 1) Eyes
-% 2) Mouth
-% 3) Eyes and Mouth (best result)
+% 1) Eyes 
+% 2) Mouth (best result)
+% 3) Eyes and Mouth 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 [features] = extractFeaturesFromData(imagesData, shapeData, Constants.EXTRACT_GRAYSCALE_EYES_AND_MOUTH);
@@ -98,7 +98,7 @@ end
 indexesCrossVal = crossvalind('Kfold',size(features,1),K);
 compareMethods = ["euclidean", "minkowski", "cityblock", "hamming"];
 for i = 1:length(compareMethods)
-    [accuracy confMatrix] = testMethod(features , labels, emotionsUsed ,  Constants.TEMPLATE_MOUTH_MEAN, compareMethods(i), indexesCrossVal);
+    [accuracy confMatrix] = testMethod(features , labels, emotionsUsed ,  Constants.TEMPLATE_EYES_AND_MOUTH_MEAN, compareMethods(i), indexesCrossVal);
     reportResult("Template: Eyes and Mouth", compareMethods(i), accuracy, confMatrix);
 end
 
@@ -115,7 +115,7 @@ end
 indexesCrossVal = crossvalind('Kfold',size(features,1),K);
 for i = 1:length(compareMethods)
     [accuracy confMatrix] = testMethod(features , labels, emotionsUsed ,  Constants.TEMPLATE_EYES_MEAN, compareMethods(i), indexesCrossVal);
-    reportResult("Template: Grayscale mouth", compareMethods(i), accuracy, confMatrix);
+    reportResult("Template: Grayscale eyes", compareMethods(i), accuracy, confMatrix);
 end
 
 
